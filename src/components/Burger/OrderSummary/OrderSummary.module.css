@@ -1,0 +1,10 @@
+.Buttons{
+  display : flex;  
+  justify-content: space-around;
+}
+
+@media (min-width: 500px){
+  .Buttons{
+    justify-content: flex-start;
+  }
+}
