@@ -1,9 +1,9 @@
 import React from "react";
-import Aux from "../../hoc/Aux/Aux";
+import Aux from "../Aux/Aux";
 import classes from "./Layout.module.css";
-import Toolbar from "../Navigation/Toolbar/Toolbar";
-import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
-import BurgerBuilder from "../BurgerBuilder/BurgerBuilder";
+import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
+import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
+import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 const Layout = props => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
