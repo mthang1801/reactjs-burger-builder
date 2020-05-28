@@ -1,0 +1,36 @@
+.InputElement{
+  display : block;
+  margin : auto;
+  width : 100%;
+  padding : .5rem .7rem;
+  font-size :1em;
+  outline : none ;
+  margin : 1rem 0;
+  border-radius : 3px;
+  border : 1px solid #ddd;
+}
+
+.InputElement:focus{
+  border-color : rgb(207, 152, 0);
+}
+
+.Invalid{  
+  border-bottom : 2px solid  red;
+}
+
+.Invalid:focus{
+  border : none ;
+  border-bottom : 2px solid  red;
+  background-color : rgb(255, 171, 161);
+
+}
+
+.ValidationError{
+  font-size : .8em;
+  font-style: italic;
+  text-align: left;
+  color : red;
+  margin : .25rem 0 1rem 0;
+}
+
+

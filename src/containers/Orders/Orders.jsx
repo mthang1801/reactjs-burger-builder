@@ -9,10 +9,11 @@ class Orders extends React.Component{
     orders : [],
     loading : true 
   }
-  componentDidMount(){
+  componentDidMount(){  
     this.setState({loading : true });
     axios.get("/orders.json")
       .then(res => {
+        console.log(res);
         let fetchedOrders = [];
         for(let key in res.data){
           fetchedOrders.push({

@@ -20,19 +20,3 @@
     width : 500px;
   }
 }
-
-.ContactData input{
-  display : block;
-  margin : auto;
-  width : 100%;
-  padding : .5rem .7rem;
-  font-size :1em;
-  outline : none ;
-  margin : 1rem 0;
-  border-radius : 3px;
-  border : 1px solid #ddd;
-}
-
-.ContactData input:focus{
-  border-color : rgb(207, 152, 0);
-}

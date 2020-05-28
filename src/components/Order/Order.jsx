@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Order.module.css";
 const Order = props => {
   let ingredients = Object.keys(props.ingredients).map( igKey => {
-    return <p className={classes.Ingredients} key={igKey}>{igKey} ({props.ingredients[igKey]})</p>
+    return <span className={classes.Ingredients} key={igKey}>{igKey} ({props.ingredients[igKey]})</span>
   })
   return(
     <div className={classes.Order}>    
