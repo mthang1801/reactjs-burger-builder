@@ -2,10 +2,7 @@ import React from 'react'
 import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button/Button";
 import classes from "./OrderSummary.module.css";
-class OrderSumary extends React.Component {
-  componentWillUpdate(){
-    console.log("[Order Summary] component will update");
-  }
+class OrderSumary extends React.Component {  
   render(){
     const ingredientsSummary = Object.keys(this.props.ingredients).map( igKey => {
       return <li key={igKey}><span style={{textTransform:"uppercase"}}>{igKey}</span>: {this.props.ingredients[igKey]}</li>

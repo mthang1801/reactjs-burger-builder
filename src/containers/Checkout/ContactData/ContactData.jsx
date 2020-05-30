@@ -4,6 +4,9 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import axios from "../../../axios-orders";
 import Input from "../../../components/UI/Input/Input";
+import {connect} from "react-redux";
+import * as orderCreator from "../../../store/actions/index";
+import withErrorHanlder from "../../../hoc/withErrorHandler/withErrorHandler";
 class ContactData extends React.Component {
   state = {
     orderForm: {
@@ -29,7 +32,8 @@ class ContactData extends React.Component {
         },
         value: "",
         validation : {
-          required : true 
+          required : true,
+          isEmail : true
         },
         valid : false ,
         touched: false,
@@ -59,7 +63,8 @@ class ContactData extends React.Component {
         validation : {
           required : true ,
           minLength : 5,
-          maxLength : 5 
+          maxLength : 5,
+          isNumber : true
         },
         valid : false ,
         touched: false,
@@ -91,8 +96,7 @@ class ContactData extends React.Component {
         value: "fastest"  ,
         valid : true      
       },
-    },
-    loading: false,
+    },  
     formIsValid : false
   };
 
@@ -120,7 +124,22 @@ class ContactData extends React.Component {
       if(!isValid){
         errorsMsg.push(`At least ${rules.maxLength} characters`)
       }      
-    }        
+    }    
+    if(rules.isEmail){
+      const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      isValid = pattern.test(value) && isValid;
+      if(!isValid){
+        errorsMsg.push("Invalid email");
+      }
+    }
+
+    if(rules.isNumber){
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+      if(!isValid){
+        errorsMsg.push("ZipCode must be number type");
+      }
+    }
     
     return {isValid , errorsMsg : errorsMsg.join(", ") } ; 
   }
@@ -145,7 +164,7 @@ class ContactData extends React.Component {
     this.setState({ orderForm: updatedOrderForm, formIsValid : formIsValid });
   };
 
-  submitForm = (e) => {
+  submitForm = async (e) => {
     e.preventDefault();
     if(!this.state.formIsValid){
       return;
@@ -160,15 +179,10 @@ class ContactData extends React.Component {
       price : this.props.totalPrice,
       customer : formData 
     }
-      axios
-      .post("/orders.json", order)
-      .then((response) => {
-        this.setState({ loading: false });
-        this.props.history.replace("/");
-      })
-      .catch((error) => {
-        this.setState({ loading: false });
-      });
+    
+    await this.props.onOrderHanlder(order) ;           
+   
+   
   };
 
   render() {
@@ -201,11 +215,23 @@ class ContactData extends React.Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return <div className={classes.ContactData}>{form}</div>;
   }
 }
 
-export default ContactData;
+const  mapStateToProps = state => ({
+  ingredients : state.burgerBuilder.ingredients,
+  totalPrice : state.burgerBuilder.totalPrice,
+  loading : state.order.loading
+});
+
+const mapDispatchToProps = dispatch => ({
+  onOrderHanlder : (orderData, history)  => {
+    dispatch(orderCreator.orderBurger(orderData))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHanlder(ContactData,axios));
