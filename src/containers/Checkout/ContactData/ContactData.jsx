@@ -175,12 +175,13 @@ class ContactData extends React.Component {
       formData[key] = this.state.orderForm[key].value;
     }
     const order ={
+      userId : this.props.userId,
       ingredients : this.props.ingredients,
       price : this.props.totalPrice,
       customer : formData 
     }
     
-    await this.props.onOrderHanlder(order) ;           
+    await this.props.onOrderHanlder(order, this.props.token) ;           
    
    
   };
@@ -225,12 +226,14 @@ class ContactData extends React.Component {
 const  mapStateToProps = state => ({
   ingredients : state.burgerBuilder.ingredients,
   totalPrice : state.burgerBuilder.totalPrice,
-  loading : state.order.loading
+  loading : state.order.loading,
+  token : state.auth.token,
+  userId : state.auth.userId 
 });
 
 const mapDispatchToProps = dispatch => ({
-  onOrderHanlder : (orderData, history)  => {
-    dispatch(orderCreator.orderBurger(orderData))
+  onOrderHanlder : (orderData, token)  => {
+    dispatch(orderCreator.orderBurger(orderData, token))
   }
 })
 

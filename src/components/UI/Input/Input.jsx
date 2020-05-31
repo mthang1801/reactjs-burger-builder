@@ -7,6 +7,10 @@ const Input = (props) => {
   if(!props.isValid && props.shouldValidation && props.touched){
     inputClasses.push(classes.Invalid);
   }
+  if(props.isValid && props.shouldValidation && props.touched){
+    inputClasses.push(classes.Valid);
+  }
+  
   switch (props.elementType) {
     case "input":
       inputElement = (

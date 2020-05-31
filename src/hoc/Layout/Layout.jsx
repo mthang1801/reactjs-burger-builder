@@ -4,16 +4,17 @@ import classes from "./Layout.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
+import {connect} from "react-redux";
 const Layout = props => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
-
+  console.log(props);
   const sideDrawerToggleHandler = () => {
     setOpenDrawer(prevState => !prevState);
   }
   return(
     <Aux>      
-        <Toolbar drawerToggleClicked={sideDrawerToggleHandler}/>
-        <SideDrawer open={openDrawer} closeMenu={() => setOpenDrawer(false)}/>        
+        <Toolbar isAuth={props.isAuthenticated} drawerToggleClicked={sideDrawerToggleHandler}/>
+        <SideDrawer isAuth={props.isAuthenticated} open={openDrawer} closeMenu={() => setOpenDrawer(false)}/>        
         <main className={classes.Content}>
           {props.children}
         </main>
@@ -21,4 +22,8 @@ const Layout = props => {
   )
 }
 
-export default Layout;
+const mapStateToProps = state => ({
+  isAuthenticated : state.auth.token !== null
+})
+
+export default connect(mapStateToProps)(Layout);
