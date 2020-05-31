@@ -1,6 +1,8 @@
 import React from "react";
 import classes from "./BuildControls.module.css";
 import BuildControl from "./BuildControl/BuildControl";
+import {connect} from "react-redux";
+
 const controls = [
   { label: "Salad", type: "salad" },
   { label: "Meat", type: "meat" },
@@ -21,6 +23,7 @@ const BuildControls = (props) => {
           key={control.label}
           label={control.label}
           type={control.type}
+          quantity={props.ingredients[control.type]}          
           added={() => props.ingredientAdded(control.type)}
           removed={() => props.ingredientRemove(control.type)}
         />
@@ -30,10 +33,14 @@ const BuildControls = (props) => {
         disabled={!props.purchaseable}
         onClick={props.ordered}
       >
-        Order Now
+        {props.isAuth ? "Order Now" : "Sign In to Order"}
       </button>
     </div>
   );
 };
 
-export default BuildControls;
+const mapStateToProps = state => ({
+  ingredients : state.burgerBuilder.ingredients
+})
+
+export default connect(mapStateToProps)(BuildControls);

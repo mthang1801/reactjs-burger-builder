@@ -29,7 +29,12 @@ class BurgerBuilder extends React.Component {
   };
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    if(this.props.isAuthenticated){
+      this.setState({ purchasing: true });
+      return ;
+    }
+    this.props.onSetAuthRedirectPath("/checkout");
+    this.props.history.push("/auth/login")
   };
 
   purchaseCancelHandler = () => {
@@ -60,12 +65,13 @@ class BurgerBuilder extends React.Component {
         <Aux>
           <Burger ingredients={this.props.ingredients} />
           <BuildControls
-          ingredientAdded={this.props.onAddIngredient}
-          ingredientRemove={this.props.onRemoveIngredient}
-          disabled={disabledInfo}
-          totalPrice={this.props.totalPrice}
-          purchaseable={this.props.purchasable}
-          ordered={this.purchaseHandler}
+            ingredientAdded={this.props.onAddIngredient}
+            ingredientRemove={this.props.onRemoveIngredient}
+            disabled={disabledInfo}
+            totalPrice={this.props.totalPrice}
+            purchaseable={this.props.purchasable}
+            ordered={this.purchaseHandler}
+            isAuth={this.props.isAuthenticated}
         />
         </Aux>
       ) ;
@@ -99,7 +105,8 @@ const mapStateToProps = state => ({
   ingredients : state.burgerBuilder.ingredients,
   totalPrice : state.burgerBuilder.totalPrice,
   purchasable : state.burgerBuilder.purchasable,
-  error : state.burgerBuilder.error
+  error : state.burgerBuilder.error,
+  isAuthenticated : state.auth.token !== null
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -114,6 +121,9 @@ const mapDispatchToProps = dispatch => ({
   },
   onPurchaseInit : () => {
     dispatch(burgerBuilderCreator.purchaseInit());
+  },
+  onSetAuthRedirectPath : (path) => {
+    dispatch(burgerBuilderCreator.setAuthRedirectPath(path))
   }
 })
 

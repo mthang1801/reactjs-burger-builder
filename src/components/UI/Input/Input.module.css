@@ -17,6 +17,9 @@
 .Invalid{  
   border-bottom : 2px solid  red;
 }
+.Valid{  
+  border : 2px solid  rgba(16, 231, 1, 0.739) !important;
+}
 
 .Invalid:focus{
   border : none ;

@@ -12,6 +12,7 @@ const initState = {
   totalPrice: 4,
   purchasable: false,
   error: false,
+  building: false,
 };
 
 export default function (state = initState, action) {
@@ -25,6 +26,7 @@ export default function (state = initState, action) {
         },
         totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
         purchasable: true,
+        building: true,
       };
     case types.REMOVE_INGREDIENT:
       let purchasable = false;
@@ -40,9 +42,10 @@ export default function (state = initState, action) {
           ...state.ingredients,
           [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
         },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
         purchasable:
           state.ingredients[action.ingredientName] - 1 > 0 ? true : purchasable,
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true,
       };
     case types.SET_INGREDIENT:
       return {
@@ -56,6 +59,7 @@ export default function (state = initState, action) {
         totalPrice: 4,
         purchasable: false,
         error: false,
+        building: false,
       };
     case types.FETCH_INGREDIENTS_FAILED:
       return {

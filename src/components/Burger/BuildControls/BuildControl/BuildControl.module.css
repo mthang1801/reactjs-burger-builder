@@ -27,6 +27,9 @@
   font-weight : bold ; 
   width : 80px;
 }
+.Quantity{
+  padding : 0 1rem;
+}
 
 .BuildControl .More{
   color: #fff; 
