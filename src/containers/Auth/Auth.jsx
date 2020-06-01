@@ -79,8 +79,7 @@ class Auth extends React.Component{
     }
   }
 
-  componentWillMount(){       
-    console.log("[Auth] componentWillMount")
+  componentWillMount(){          
     this.setState({isSignup: this.props.match.url.split("/")[2] === "register"})  
   }
 
@@ -140,8 +139,7 @@ class Auth extends React.Component{
     this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup)
   }
 
-  render(){     
-    console.log("[Auth] render")
+  render(){        
     let formElementArray = [];
     for(let key in this.state.controls){
       if(!this.state.isSignup && (key === "name" || key === "confirmPassword")){

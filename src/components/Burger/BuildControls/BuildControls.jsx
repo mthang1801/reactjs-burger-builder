@@ -16,7 +16,7 @@ const BuildControls = (props) => {
     <div className={classes.BuildControls}>
       <div className={classes.totalPrice}>
         Current Price : <strong>${props.totalPrice.toFixed(2)}</strong>
-      </div>
+      </div>      
       {controls.map((control) => (
         <BuildControl
           disabled={props.disabled[control.type]}
