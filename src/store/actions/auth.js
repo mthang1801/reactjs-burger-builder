@@ -31,8 +31,6 @@ export const auth = (email, password, isSignup) => async (dispatch) => {
       payload: { token: res.data.idToken, userId: res.data.localId },
     });
   } catch (error) {
-    console.log(error.response.data.error);
-
     dispatch({
       type: types.AUTH_FAIL,
       payload: {
@@ -62,8 +60,6 @@ export const setAuthRedirectPath = (path) => {
 export const authCheckState = () => (dispatch) => {
   const token = localStorage.getItem("token");
   const expirationTime = localStorage.getItem("expirationTime");
-  console.log(new Date() - new Date(expirationTime));
-  console.log(Date.now() > new Date(expirationTime));
   if (!token || new Date() > new Date(expirationTime)) {
     dispatch(logout());
     return;

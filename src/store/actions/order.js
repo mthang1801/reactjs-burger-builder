@@ -29,7 +29,6 @@ export const fetchOrders = (token, userId) => async (dispatch) => {
     dispatch({
       type: types.FETCH_ORDERS_START,
     });
-    console.log(userId);
     const queryParams =
       "?auth=" + token + '&orderBy="userId"&equalTo="' + userId + '"';
     const res = await axios.get("/orders.json" + queryParams);
@@ -40,7 +39,6 @@ export const fetchOrders = (token, userId) => async (dispatch) => {
         ...res.data[key],
       });
     }
-    console.log(res);
     dispatch({
       type: types.FETCH_ORDERS_SUCCESS,
       payload: { orders: fetchData },

@@ -24,7 +24,6 @@ export const initBurgerBuilder = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: types.FETCH_INGREDIENTS_FAILED,
     });

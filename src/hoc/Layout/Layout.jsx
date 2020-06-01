@@ -6,8 +6,7 @@ import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 import {connect} from "react-redux";
 const Layout = props => {
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-  console.log(props);
+  const [openDrawer, setOpenDrawer] = React.useState(false); 
   const sideDrawerToggleHandler = () => {
     setOpenDrawer(prevState => !prevState);
   }

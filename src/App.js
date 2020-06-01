@@ -3,22 +3,27 @@ import Aux from "./hoc/Aux/Aux";
 import Layout from "./hoc/Layout/Layout";
 import "./App.css";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
-import Checkout from "./containers/Checkout/Checkout";
 import Logout from "./containers/Auth/Logout/Logout";
-import Orders from "./containers/Orders/Orders";
-import Auth from "./containers/Auth/Auth";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import RoutePrivate from "./components/Routing/PrivateRoute";
 import * as actions from "./store/actions/index";
+import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 
+const asyncCheckout = asyncComponent(() => {
+  return import("./containers/Checkout/Checkout");
+});
+const asyncOrders = asyncComponent(() => {
+  return import("./containers/Orders/Orders");
+});
+const asyncAuth = asyncComponent(() => {
+  return import("./containers/Auth/Auth");
+});
 class App extends React.Component {
   componentDidMount() {
-    console.log("[rootComponent] componentDidMount");
     this.props.onCheckState();
   }
   render() {
-    console.log(this.props.isAuthenticated);
     const clientRoute = <React.Fragment></React.Fragment>;
 
     const authRoute = <React.Fragment></React.Fragment>;
@@ -27,11 +32,11 @@ class App extends React.Component {
         <Layout>
           <Switch>
             <Route path="/" exact component={BurgerBuilder} />
-            <Route path="/auth" exact component={Auth} />
+            <Route path="/auth" exact component={asyncAuth} />
             <Route path="/auth/logout" component={Logout} />
-            <Route path="/auth/:method" component={Auth} />
-            <RoutePrivate path="/checkout" component={Checkout} />
-            <RoutePrivate path="/orders" exact component={Orders} />
+            <Route path="/auth/:method" component={asyncAuth} />
+            <RoutePrivate path="/checkout" component={asyncCheckout} />
+            <RoutePrivate path="/orders" exact component={asyncOrders} />
             <Route
               render={() => <h1>Sorry, we didn't found you search page :)</h1>}
             ></Route>

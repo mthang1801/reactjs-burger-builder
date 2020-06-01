@@ -33,7 +33,7 @@ class BurgerBuilder extends React.Component {
       this.setState({ purchasing: true });
       return ;
     }
-    this.props.onSetAuthRedirectPath("/checkout");
+    this.props.onSetAuthRedirectPath("/");
     this.props.history.push("/auth/login")
   };
 
@@ -41,9 +41,11 @@ class BurgerBuilder extends React.Component {
     this.setState({ purchasing: false });
   };
 
-  async componentDidMount(){   
-    console.log("[BurgerBuilder] componentDidMount")
-    await this.props.onInitIngredients();   
+  async componentDidMount(){      
+    if(!this.props.building){
+      await this.props.onInitIngredients();   
+    }
+   
   };
 
   purchaseContinueHandler = () => {        
@@ -106,7 +108,8 @@ const mapStateToProps = state => ({
   totalPrice : state.burgerBuilder.totalPrice,
   purchasable : state.burgerBuilder.purchasable,
   error : state.burgerBuilder.error,
-  isAuthenticated : state.auth.token !== null
+  isAuthenticated : state.auth.token !== null,
+  building : state.burgerBuilder.building
 })
 
 const mapDispatchToProps = dispatch => ({
