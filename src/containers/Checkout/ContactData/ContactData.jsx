@@ -183,7 +183,6 @@ class ContactData extends React.Component {
     
     await this.props.onOrderHanlder(order, this.props.token) ;           
    
-   
   };
 
   render() {

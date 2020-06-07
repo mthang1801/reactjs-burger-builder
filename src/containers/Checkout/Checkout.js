@@ -5,37 +5,33 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
-class Checkout extends React.Component {
-  checkoutCancelHandler = () => {
-    this.props.history.goBack();
+const Checkout = (props) => {
+  const checkoutCancelHandler = () => {
+    props.history.goBack();
   };
-  checkoutContinueHanlder = () => {
-    this.props.history.replace("/checkout/contact-data");
+  const checkoutContinueHanlder = () => {
+    props.history.replace("/checkout/contact-data");
   };
-  render() {
-    let checkoutSummary = <Redirect to="/" />;
-    if (this.props.ingredients) {
-      const purchasedRedirect = this.props.purchased ? (
-        <Redirect to="/" />
-      ) : null;
-      checkoutSummary = (
-        <div>
-          {purchasedRedirect}
-          <CheckoutSummary
-            ingredients={this.props.ingredients}
-            onCheckoutCancel={this.checkoutCancelHandler}
-            onCheckoutContinue={this.checkoutContinueHanlder}
-          />
-          <Route
-            path={`${this.props.match.path}/contact-data`}
-            component={ContactData}
-          />
-        </div>
-      );
-    }
-    return checkoutSummary;
+  let checkoutSummary = <Redirect to="/" />;
+  if (props.ingredients) {
+    const purchasedRedirect = props.purchased ? <Redirect to="/" /> : null;
+    checkoutSummary = (
+      <div>
+        {purchasedRedirect}
+        <CheckoutSummary
+          ingredients={props.ingredients}
+          onCheckoutCancel={checkoutCancelHandler}
+          onCheckoutContinue={checkoutContinueHanlder}
+        />
+        <Route
+          path={`${props.match.path}/contact-data`}
+          component={ContactData}
+        />
+      </div>
+    );
   }
-}
+  return checkoutSummary;
+};
 
 const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,
