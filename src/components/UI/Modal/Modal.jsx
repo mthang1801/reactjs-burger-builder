@@ -1,22 +1,19 @@
-import React from "react";
+import React, {useState, memo} from "react";
 import classes from "./Modal.module.css";
 import clsx from "clsx";
 import Backdrop from "../Backdrop/Backdrop";
 import Aux from "../../../hoc/Aux/Aux";
-class Modal extends React.Component {  
-  shouldComponentUpdate(nextProps, nextState){
-   return nextProps.show !== this.props.show || nextProps.children !== this.props.children
-  }  
-  render(){
+const Modal= props=> {  
+    console.log(props)  
     return(
       <Aux>
-        <Backdrop show={this.props.show} close={this.props.close}></Backdrop>
-        <div className={clsx(classes.Modal, this.props.show ? classes.show : "")}>    
-          {this.props.children}
+        <Backdrop show={props.show} close={props.close}></Backdrop>
+        <div className={clsx(classes.Modal, props.show ? classes.show : "")}>    
+          {props.children}
         </div>      
       </Aux>
     )
-  }
+  
 }
 
-export default  Modal;
+export default memo(Modal, (prevProps, nextProps) =>  nextProps.show === prevProps.show || nextProps.children === prevProps.children);

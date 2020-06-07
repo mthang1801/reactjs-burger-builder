@@ -19,6 +19,7 @@ export const initBurgerBuilder = () => async (dispatch) => {
     const res = await axios.get(
       "https://react-burger-5671d.firebaseio.com/ingredients.json"
     );
+    console.log(res.data);
     dispatch({
       type: types.SET_INGREDIENT,
       payload: res.data,
